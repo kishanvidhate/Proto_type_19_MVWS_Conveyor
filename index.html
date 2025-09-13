@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MVWS Conveyor Calculator — BOM Units</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Medium Velocity Water Spray (MVWS) design calculator for conveyors with a Unit column in BOM." />
+</head>
+<body>
+  <header class="app-header">
+    <h1>MVWS Conveyor Calculator</h1>
+    <div class="meta">
+      <span class="badge">BOM Units Added</span>
+      <span class="muted">Updated: 2025-09-13 17:10</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Editable Inputs <span class="hint">(blue)</span></h2>
+      <div class="grid two">
+        <label class="input-label">Conveyor length (m)
+          <input id="conveyor_length_m" class="num input-blue" type="number" step="0.01" min="0" value="50.00" />
+        </label>
+        <label class="input-label">Conveyor width (m)
+          <input id="conveyor_width_m" class="num input-blue" type="number" step="0.01" min="0" value="1.20" />
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>Advanced inputs <span class="hint">(blue)</span></h2>
+        <button id="toggle-adv" class="btn ghost" aria-expanded="true">Collapse</button>
+      </div>
+      <div id="adv-wrap">
+        <div class="grid three">
+          <label class="input-label">No. of belts
+            <input id="num_belts" class="num input-blue" type="number" step="1" min="1" value="1" />
+          </label>
+          <label class="input-label">Max nozzle spacing (m)
+            <input id="max_nozzle_spacing_m" class="num input-blue" type="number" step="0.01" min="0.10" value="2.50" />
+          </label>
+          <label class="input-label">Nozzles per location
+            <input id="nozzles_per_location" class="num input-blue" type="number" step="1" min="1" value="2" />
+          </label>
+
+          <label class="input-label">LHS cable runs three sides?
+            <input id="lhs_runs_three_side" type="checkbox" />
+          </label>
+
+          <!-- This specific cell must be editable and above the hydrant distance -->
+          <label class="input-label important">Approx. quantity in meters of LHS Cable from conveyor to deluge valve control panel
+            <input id="lhs_cable_qty_to_panel" class="num input-blue" type="number" step="0.01" min="0" value="25.00" />
+          </label>
+
+          <label class="input-label">Distance from deluge valve to main hydrant line (m)
+            <input id="distance_deluge_to_hydrant_m" class="num input-blue" type="number" step="0.01" min="0" value="15.00" />
+          </label>
+
+          <label class="input-label">System pressure (bar)
+            <input id="system_pressure_bar" class="num input-blue" type="number" step="0.01" min="0" value="7.00" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="btn-row">
+        <button id="btn-calc" class="btn primary">Calculate</button>
+        <button id="btn-pdf" class="btn">Download PDF</button>
+        <button id="btn-reset" class="btn danger ghost">Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Calculation Results <span class="hint">(green)</span></h2>
+      <div class="grid three results">
+        <div class="result"><div class="label">Total nozzles</div><div id="r_total_nozzles" class="value green">—</div></div>
+        <div class="result"><div class="label">Estimated total flow (L/s)</div><div id="r_total_flow_lps" class="value green">—</div></div>
+        <div class="result"><div class="label">Deluge valve selection</div><div id="r_deluge_valve" class="value green">—</div></div>
+        <div class="result"><div class="label">LHS cable total (m)</div><div id="r_lhs_cable_total_m" class="value green">—</div></div>
+        <div class="result"><div class="label">Pipe run (approx, m)</div><div id="r_pipe_run_m" class="value green">—</div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Bill of Materials (with Unit)</h2>
+      <div class="table-wrap">
+        <table id="bom">
+          <thead>
+            <tr>
+              <th>SR NO</th>
+              <th class="right">QTY</th>
+              <th>DESCRIPTION</th>
+              <th>UNIT</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>Blue fields are editable. Green are calculated. Units now shown in a dedicated column.</small>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
